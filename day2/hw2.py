@@ -50,7 +50,10 @@ if __name__ == "__main__":
         print("(正在串流輸出... 格式為 raw chunks)")
         for chunk in map_chain.stream({"topic": topic}):
             # chunk 是一個字典，包含部分生成的內容
-            print(chunk)
+            try:
+                print(chunk,end='',flush=True)
+            except UnicodeEncodeError:
+                print(chunk.encode('utf-8','replace').decode('utf-8'),end='',flush=True)
         # --- Batch Invoke (批次執行) ---
         print("===" * 10)
         print(" [Batch Invoke 模式] ")
